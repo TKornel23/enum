@@ -21,6 +21,28 @@ Allergen operator&(const Allergen lhs, const Allergen rhs)
 	return result;
 }
 
+Allergen ParseAllergen(const std::string& remainingLine)
+{
+	const auto selectAllergen = [](const auto& allergenName) {
+		for (const auto& [key, value] : allergenNames) {
+			if (allergenName == value) {
+				return key;
+			}
+		}
+		throw std::invalid_argument(allergenName);
+	};
+
+	auto pos = remainingLine.find(',');
+	if (pos == std::string::npos) {
+		try {
+			return selectAllergen(remainingLine);
+		}
+		catch (const std::invalid_argument&) {
+			return static_cast<Allergen>(0);
+		}
+	}
+}
+
 std::ostream& operator<<(std::ostream& os, const Allergen& allergen)
 {
 	std::string separator = "";
@@ -28,7 +50,7 @@ std::ostream& operator<<(std::ostream& os, const Allergen& allergen)
 	{
 		if ((key & allergen) == key) {
 			os << separator << value;
-			separator = "|";
+			separator = ",";
 		}
 	}
 	return os;

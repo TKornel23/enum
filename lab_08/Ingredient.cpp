@@ -23,11 +23,23 @@ Ingredient::Ingredient(const std::string& name, const Allergens& allergens)
 	}
 }
 
+Ingredient Ingredient::Parse(const std::string& line)
+{
+	const auto pos = line.find(',');
+	if (pos == std::string::npos) {
+		return Ingredient(line);
+	}
+
+	const auto name = line.substr(0, pos);
+	const auto allergen = ParseAllergen(line.substr(pos + 1));
+	return Ingredient(name, allergen);
+}
+
 std::ostream& operator<<(std::ostream& os, const Ingredient& ingredient)
 {
 	os << ingredient.mName;
 	if (static_cast<uint8_t>(ingredient.mAllergen) != 0) {
-		os << "(" << ingredient.mAllergen << ")";
+		os << "," << ingredient.mAllergen;
 	}
 
 	return os;

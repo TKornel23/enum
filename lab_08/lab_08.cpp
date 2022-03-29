@@ -4,6 +4,26 @@
 #include <iostream>
 #include "Ingredient.h"
 #include<vector>
+#include <algorithm>
+#include<fstream>
+#include<string>
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os, std::vector<T>& vec) {
+	std::for_each(vec.begin(), vec.end(), [&os](const T& item) { os << item << std::endl; });
+	return os;
+}
+
+template<typename T>
+std::ifstream& operator>>(std::ifstream ifs, std::vector<T>& vec) {
+	while (!is.eof()) {
+		std::string line;
+		std::getline(ifs, line);
+		vec.push_back(T::Parse(line));
+	}
+
+	return ifs;
+}
 
 int main()
 {
@@ -12,11 +32,10 @@ int main()
 	ingredients.emplace_back("flour", Allergen::Gluten);
 	ingredients.emplace_back("egg", Allergen::Egg);
 	ingredients.emplace_back("pasta", Allergens{Allergen::Gluten,Allergen::Egg});
+	ingredients.emplace_back("fish", Allergen::Fish);
 
-	for (const auto& ingredient : ingredients)
-	{
-		std::cout << ingredient << std::endl;
-	}
+	std::ofstream outputFile("ingredients.txt");
+	outputFile << ingredients;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

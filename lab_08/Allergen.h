@@ -15,6 +15,8 @@ void operator|=(Allergen& lhs, const Allergen rhs);
 
 Allergen operator&(const Allergen lhs, const Allergen rhs);
 
+Allergen ParseAllergen(const std::string& remainingLine);
+
 std::ostream& operator<<(std::ostream& os, const Allergen& allergen);
 
 
