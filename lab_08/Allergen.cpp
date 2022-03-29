@@ -41,6 +41,24 @@ Allergen ParseAllergen(const std::string& remainingLine)
 			return static_cast<Allergen>(0);
 		}
 	}
+	Allergen result = static_cast<Allergen>(0);
+	auto remainingString = remainingLine;
+	do {
+		try {
+			result |= selectAllergen(remainingString.substr(0, pos));
+		}
+		catch (const std::invalid_argument&) {
+
+		}
+		remainingString = remainingString.substr(pos + 1);
+		pos = remainingString.find(',');
+	} while (pos != std::string::npos);
+	try {
+		result |= selectAllergen(remainingString);
+	}
+	catch (const std::invalid_argument&) {
+
+	}
 }
 
 std::ostream& operator<<(std::ostream& os, const Allergen& allergen)

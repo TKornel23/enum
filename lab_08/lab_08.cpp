@@ -16,7 +16,7 @@ std::ostream& operator<<(std::ostream& os, std::vector<T>& vec) {
 
 template<typename T>
 std::ifstream& operator>>(std::ifstream ifs, std::vector<T>& vec) {
-	while (!is.eof()) {
+	while (!ifs.eof()) {
 		std::string line;
 		std::getline(ifs, line);
 		vec.push_back(T::Parse(line));
@@ -28,14 +28,17 @@ std::ifstream& operator>>(std::ifstream ifs, std::vector<T>& vec) {
 int main()
 {
 	std::vector<Ingredient> ingredients;
-	ingredients.emplace_back("water");
+	/*ingredients.emplace_back("water");
 	ingredients.emplace_back("flour", Allergen::Gluten);
 	ingredients.emplace_back("egg", Allergen::Egg);
 	ingredients.emplace_back("pasta", Allergens{Allergen::Gluten,Allergen::Egg});
-	ingredients.emplace_back("fish", Allergen::Fish);
+	ingredients.emplace_back("fish", Allergen::Fish);*/
 
-	std::ofstream outputFile("ingredients.txt");
-	outputFile << ingredients;
+	std::ifstream inputFile("ingredients.txt");
+	inputFile >> ingredients;
+
+	std::cout << ingredients;
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
