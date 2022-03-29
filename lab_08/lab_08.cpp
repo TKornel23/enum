@@ -3,11 +3,20 @@
 
 #include <iostream>
 #include "Ingredient.h"
-#include "Allergen.h"
+#include<vector>
 
 int main()
 {
-    std::cout << sizeof(Allergen) << std::endl;
+	std::vector<Ingredient> ingredients;
+	ingredients.emplace_back("water");
+	ingredients.emplace_back("flour", Allergen::Gluten);
+	ingredients.emplace_back("egg", Allergen::Egg);
+	ingredients.emplace_back("pasta", Allergens{Allergen::Gluten,Allergen::Egg});
+
+	for (const auto& ingredient : ingredients)
+	{
+		std::cout << ingredient << std::endl;
+	}
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
