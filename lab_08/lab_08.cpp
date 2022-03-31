@@ -15,7 +15,7 @@ std::ostream& operator<<(std::ostream& os, std::vector<T>& vec) {
 }
 
 template<typename T>
-std::ifstream& operator>>(std::ifstream ifs, std::vector<T>& vec) {
+std::ifstream& operator>>(std::ifstream& ifs, std::vector<T>& vec) {
 	while (!ifs.eof()) {
 		std::string line;
 		std::getline(ifs, line);
